@@ -15,7 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.igordanilchik.daggertest.R;
 import com.igordanilchik.daggertest.model.Category;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,7 +27,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
     private static final String LOG_TAG = CategoriesAdapter.class.getSimpleName();
     @NonNull
-    private List<Category> dataset = new ArrayList<>();
+    private List<Category> dataset = Collections.emptyList();
     @NonNull
     private final PublishSubject<Category> onClickSubject = PublishSubject.create();
     @NonNull
@@ -68,8 +68,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     }
 
     public void update(@NonNull List<Category> categories) {
-        dataset.clear();
-        dataset.addAll(categories);
+        dataset = categories;
         notifyDataSetChanged();
     }
 

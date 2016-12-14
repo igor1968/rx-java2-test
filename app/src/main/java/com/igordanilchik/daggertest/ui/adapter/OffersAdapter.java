@@ -15,7 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.igordanilchik.daggertest.R;
 import com.igordanilchik.daggertest.model.Offer;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,7 +27,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
 
     private static final String LOG_TAG = CategoriesAdapter.class.getSimpleName();
     @NonNull
-    private List<Offer> dataset = new ArrayList<>();
+    private List<Offer> dataset = Collections.emptyList();
     @NonNull
     private final PublishSubject<Offer> onClickSubject = PublishSubject.create();
     @NonNull
@@ -77,8 +77,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
     }
 
     public void update(@NonNull List<Offer> offers) {
-        dataset.clear();
-        dataset.addAll(offers);
+        dataset = offers;
         notifyDataSetChanged();
     }
 
