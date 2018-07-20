@@ -2,7 +2,6 @@ package com.igordanilchik.daggertest;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.StrictMode;
 
 import com.squareup.leakcanary.LeakCanary;
 
@@ -31,15 +30,15 @@ public class DaggerApplication extends Application {
         if (BuildConfig.DEBUG) {
             LeakCanary.install(this);
 
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                        .detectAll()
-                        .penaltyLog()
-                        .build());
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                        .detectAll()
-                        .penaltyLog()
-                        //.penaltyDeath()
-                        .build());
+//            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+//                        .detectAll()
+//                        .penaltyLog()
+//                        .build());
+//            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+//                        .detectAll()
+//                        .penaltyLog()
+//                        //.penaltyDeath()
+//                        .build());
         }
     }
 
