@@ -70,16 +70,24 @@ dependencies {
     implementation 'pl.charmas.android:android-reactive-location:1.0@aar'
     implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.0@aar'
 
-    implementation 'com.github.VictorAlbertos.RxCache:runtime:1.6.9'
-    implementation 'com.github.VictorAlbertos.Jolyglot:jackson:0.0.4'
-
     implementation 'com.google.dagger:dagger:2.13'
+
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.6"
 
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
     kapt 'com.google.dagger:dagger-compiler:2.13'
     kapt 'com.jakewharton:butterknife-compiler:8.5.1'
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'com.arello-mobile:moxy:1.5.5'
+    implementation 'com.arello-mobile:moxy-app-compat:1.5.5'
+    kapt 'com.arello-mobile:moxy-compiler:1.5.5'
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'com.vanniktech:rxpermission:0.3.0'
+    implementation "com.github.akarnokd:rxjava2-interop:0.12.11"
 }
 
 android {
