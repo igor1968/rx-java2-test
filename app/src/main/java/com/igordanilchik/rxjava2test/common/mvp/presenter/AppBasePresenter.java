@@ -102,7 +102,7 @@ public class AppBasePresenter<View extends AppBaseView> extends MvpPresenter<Vie
          *  subscribe(... , delayError = false)
          *  {@code}
          *
-         *  {@code} compositeSubscription.clear() {@code} @ DetachView
+         *  {@code} compositeDisposable.clear() {@code} @ DetachView
          *  </pre>
          **/
         int IO_DETACH = 1;
@@ -115,7 +115,7 @@ public class AppBasePresenter<View extends AppBaseView> extends MvpPresenter<Vie
          *  subscribe(... , delayError = true)
          *  {@code}
          *
-         *  {@code} compositeSubscription.clear() {@code} @ DetachView
+         *  {@code} compositeDisposable.clear() {@code} @ DetachView
          *  </pre>
          **/
         int IO_DETACH_DELAY_ERROR = 2;
@@ -128,7 +128,7 @@ public class AppBasePresenter<View extends AppBaseView> extends MvpPresenter<Vie
          *  subscribe(... , delayError = false)
          *  {@code}
          *
-         *  {@code} compositeSubscription.clear() {@code} @ DestroyView
+         *  {@code} compositeDisposable.clear() {@code} @ DestroyView
          *  </pre>
          **/
         int IO_DESTROY = 3;
@@ -141,7 +141,7 @@ public class AppBasePresenter<View extends AppBaseView> extends MvpPresenter<Vie
          *  subscribe(... , delayError = true)
          *  {@code}
          *
-         *  {@code} compositeSubscription.clear() {@code} @ DestroyView
+         *  {@code} compositeDisposable.clear() {@code} @ DestroyView
          *  </pre>
          **/
         int IO_DESTROY_DELAY_ERROR = 4;
@@ -154,7 +154,7 @@ public class AppBasePresenter<View extends AppBaseView> extends MvpPresenter<Vie
          *  subscribe(... , delayError = false)
          *  {@code}
          *
-         *  {@code} compositeSubscription.clear() {@code} @ DetachView
+         *  {@code} compositeDisposable.clear() {@code} @ DetachView
          *  </pre>
          **/
         int COMPUTATION_DETACH = 5;
@@ -167,7 +167,7 @@ public class AppBasePresenter<View extends AppBaseView> extends MvpPresenter<Vie
          *  subscribe(... , delayError = true)
          *  {@code}
          *
-         *  {@code} compositeSubscription.clear() {@code} @ DetachView
+         *  {@code} compositeDisposable.clear() {@code} @ DetachView
          *  </pre>
          **/
         int COMPUTATION_DETACH_DELAY_ERROR = 6;
@@ -180,7 +180,7 @@ public class AppBasePresenter<View extends AppBaseView> extends MvpPresenter<Vie
          *  subscribe(... , delayError = false)
          *  {@code}
          *
-         *  {@code} compositeSubscription.clear() {@code} @ DestroyView
+         *  {@code} compositeDisposable.clear() {@code} @ DestroyView
          *  </pre>
          **/
         int COMPUTATION_DESTROY = 7;
@@ -193,7 +193,7 @@ public class AppBasePresenter<View extends AppBaseView> extends MvpPresenter<Vie
          *  subscribe(... , delayError = true)
          *  {@code}
          *
-         *  {@code} compositeSubscription.clear() {@code} @ DestroyView
+         *  {@code} compositeDisposable.clear() {@code} @ DestroyView
          *  </pre>
          **/
         int COMPUTATION_DESTROY_DELAY_ERROR = 8;
@@ -206,7 +206,7 @@ public class AppBasePresenter<View extends AppBaseView> extends MvpPresenter<Vie
          *  subscribe(... , delayError = false)
          *  {@code}
          *
-         *  {@code} compositeSubscription.clear() {@code} @ DetachView
+         *  {@code} compositeDisposable.clear() {@code} @ DetachView
          *  </pre>
          **/
         int IMMEDIATE_DETACH = 9;
@@ -219,7 +219,7 @@ public class AppBasePresenter<View extends AppBaseView> extends MvpPresenter<Vie
          *  subscribe(... , delayError = true)
          *  {@code}
          *
-         *  {@code} compositeSubscription.clear() {@code} @ DetachView
+         *  {@code} compositeDisposable.clear() {@code} @ DetachView
          *  </pre>
          **/
         int IMMEDIATE_DETACH_DELAY_ERROR = 10;
@@ -232,7 +232,7 @@ public class AppBasePresenter<View extends AppBaseView> extends MvpPresenter<Vie
          *  subscribe(... , delayError = false)
          *  {@code}
          *
-         *  {@code} compositeSubscription.clear() {@code} @ DestroyView
+         *  {@code} compositeDisposable.clear() {@code} @ DestroyView
          *  </pre>
          **/
         int IMMEDIATE_DESTROY = 11;
@@ -245,7 +245,7 @@ public class AppBasePresenter<View extends AppBaseView> extends MvpPresenter<Vie
          *  subscribe(... , delayError = true)
          *  }
          *
-         *  {@code compositeSubscription.clear() } @ DestroyView
+         *  {@code compositeDisposable.clear() } @ DestroyView
          *  </pre>
          **/
         int IMMEDIATE_DESTROY_DELAY_ERROR = 12;
