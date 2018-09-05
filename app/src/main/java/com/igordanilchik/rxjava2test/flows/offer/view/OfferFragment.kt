@@ -1,24 +1,22 @@
 package com.igordanilchik.rxjava2test.flows.offer.view
 
-import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.snackbar.Snackbar
 import com.igordanilchik.rxjava2test.R
 import com.igordanilchik.rxjava2test.common.mvp.view.BaseFragment
 import com.igordanilchik.rxjava2test.data.Offers
 import com.igordanilchik.rxjava2test.flows.offer.builder.OfferModule
 import com.igordanilchik.rxjava2test.flows.offer.model.OfferSupplier
 import com.igordanilchik.rxjava2test.flows.offer.presenter.OfferPresenter
-import com.igordanilchik.rxjava2test.ui.activity.MainActivity
 
 /**
  * @author Igor Danilchik
@@ -56,7 +54,7 @@ class OfferFragment : BaseFragment(), OfferView {
                 Glide.with(this)
                         .load(it)
                         .fitCenter()
-                        .placeholder(ContextCompat.getDrawable(context, R.drawable.ic_image_black_24dp))
+                        .placeholder(context?.let { it1 -> ContextCompat.getDrawable(it1, R.drawable.ic_image_black_24dp) })
                         .crossFade()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(image)
@@ -83,8 +81,7 @@ class OfferFragment : BaseFragment(), OfferView {
 
     @ProvidePresenter
     fun providePresenter(): OfferPresenter {
-        val bundle = arguments ?: Bundle()
-        val supplier = OfferSupplier(id = bundle.getInt(MainActivity.ARG_OFFER_ID))
+        val supplier = OfferSupplier(id = arguments?.let { OfferFragmentArgs.fromBundle(it).offerId } ?: 0)
 
         return appComponent().plusOfferComponent(OfferModule(supplier)).presenter()
     }

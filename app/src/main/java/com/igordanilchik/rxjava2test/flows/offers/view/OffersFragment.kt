@@ -1,43 +1,44 @@
 package com.igordanilchik.rxjava2test.flows.offers.view
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.google.android.material.snackbar.Snackbar
 import com.igordanilchik.rxjava2test.R
 import com.igordanilchik.rxjava2test.common.mvp.view.BaseFragment
 import com.igordanilchik.rxjava2test.data.Offers
 import com.igordanilchik.rxjava2test.flows.offers.builder.OffersModule
 import com.igordanilchik.rxjava2test.flows.offers.model.OffersSupplier
 import com.igordanilchik.rxjava2test.flows.offers.presenter.OffersPresenter
-import com.igordanilchik.rxjava2test.ui.ViewContract
-import com.igordanilchik.rxjava2test.ui.activity.MainActivity
 import com.igordanilchik.rxjava2test.ui.adapter.OffersAdapter
 
 /**
  * @author Igor Danilchik
  */
-class OffersFragment: BaseFragment(), OffersView, OffersAdapter.OffersCallback {
+class OffersFragment : BaseFragment(), OffersView, OffersAdapter.OffersCallback {
 
     @BindView(R.id.offers_recycler_view)
-    lateinit var recyclerView: RecyclerView
+    lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
 
     @InjectPresenter
     lateinit var presenter: OffersPresenter
 
     override val layoutResID = R.layout.fragment_offers
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        recyclerView.addItemDecoration(
+            androidx.recyclerview.widget.DividerItemDecoration(
+                activity,
+                androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
+            )
+        )
     }
 
     override fun onDestroyView() {
@@ -58,30 +59,24 @@ class OffersFragment: BaseFragment(), OffersView, OffersAdapter.OffersCallback {
 
     override fun showError(throwable: Throwable) {
         Snackbar.make(recyclerView, "Error: " + throwable.message, Snackbar.LENGTH_LONG)
-                .show()
+            .show()
     }
 
     override fun showProgress() {
-
     }
 
     override fun hideProgress() {
-
     }
 
     override fun goToOffer(id: Int) {
-        val bundle = Bundle()
-        bundle.putInt(MainActivity.ARG_OFFER_ID, id)
-
-        (activity as ViewContract).goToOffer(bundle)
+        val directions = OffersFragmentDirections.toOfferFragment().setOfferId(id)
+        view?.findNavController()?.navigate(directions)
     }
 
     @ProvidePresenter
     fun providePresenter(): OffersPresenter {
-        val bundle = arguments ?: Bundle()
-        val supplier = OffersSupplier(id = bundle.getInt(MainActivity.ARG_CATEGORY_ID))
+        val supplier = OffersSupplier(id = arguments?.let { OffersFragmentArgs.fromBundle(it).categoryId } ?: 0)
 
         return appComponent().plusOffersComponent(OffersModule(supplier)).presenter()
     }
-
 }

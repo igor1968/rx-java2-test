@@ -19,7 +19,7 @@ abstract class BaseFragment: MvpAppCompatFragment() {
 
     abstract val layoutResID: Int
 
-    fun appComponent(): ApplicationComponent = DaggerApplication[context].appComponent
+    fun appComponent(): ApplicationComponent = DaggerApplication[context!!].appComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

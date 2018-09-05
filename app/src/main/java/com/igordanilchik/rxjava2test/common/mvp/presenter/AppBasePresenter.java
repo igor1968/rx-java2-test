@@ -1,8 +1,6 @@
 package com.igordanilchik.rxjava2test.common.mvp.presenter;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
 
 import com.arellomobile.mvp.MvpPresenter;
 import com.igordanilchik.rxjava2test.common.mvp.view.AppBaseView;
@@ -11,6 +9,8 @@ import com.igordanilchik.rxjava2test.repo.SchedulersSet;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 import io.reactivex.Completable;
 import io.reactivex.CompletableTransformer;
 import io.reactivex.Observable;

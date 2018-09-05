@@ -5,9 +5,8 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -17,6 +16,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 import com.igordanilchik.rxjava2test.R
 import com.igordanilchik.rxjava2test.common.mvp.view.BaseFragment
 import com.igordanilchik.rxjava2test.flows.location.builder.LocationModule
@@ -60,8 +60,8 @@ class LocationFragment : BaseFragment(), LocationView {
     override fun onDestroy() {
         super.onDestroy()
 
-        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (activity?.let { ActivityCompat.checkSelfPermission(it, Manifest.permission.ACCESS_FINE_LOCATION) } == PackageManager.PERMISSION_GRANTED
+                || activity?.let { ActivityCompat.checkSelfPermission(it, Manifest.permission.ACCESS_COARSE_LOCATION) } == PackageManager.PERMISSION_GRANTED) {
 
             map?.isMyLocationEnabled = false
         }
@@ -101,7 +101,7 @@ class LocationFragment : BaseFragment(), LocationView {
     override fun showError(e: Throwable) {
         Timber.e(e, "Error: ")
 
-        Snackbar.make(activity.findViewById(android.R.id.content), "Error: " + e.message, Snackbar.LENGTH_LONG)
+        Snackbar.make(activity!!.findViewById(android.R.id.content), "Error: " + e.message, Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
                 .show()
     }

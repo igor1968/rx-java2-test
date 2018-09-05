@@ -1,6 +1,5 @@
 package com.igordanilchik.rxjava2test.ui.base.adapter.holder
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import butterknife.ButterKnife
 import com.arellomobile.mvp.MvpDelegate
@@ -12,7 +11,7 @@ abstract class BaseViewHolder<ITEM_TYPE, CALLBACK_TYPE>(
         itemView: View,
         private val parentDelegate: MvpDelegate<*>?,
         protected var callback: CALLBACK_TYPE?
-) : RecyclerView.ViewHolder(itemView), IBaseViewHolder<ITEM_TYPE> {
+) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), IBaseViewHolder<ITEM_TYPE> {
 
     private var mvpDelegate: MvpDelegate<out BaseViewHolder<*, *>>? = null
 

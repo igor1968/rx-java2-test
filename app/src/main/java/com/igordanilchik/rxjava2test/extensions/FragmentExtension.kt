@@ -1,9 +1,6 @@
 package com.igordanilchik.rxjava2test.extensions
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-
-fun FragmentActivity.replaceFragment(containerId: Int, fragment: Fragment, addToBackStack: Boolean) {
+fun androidx.fragment.app.FragmentActivity.replaceFragment(containerId: Int, fragment: androidx.fragment.app.Fragment, addToBackStack: Boolean) {
     val fm = this.supportFragmentManager
     val ft = fm.beginTransaction()
 

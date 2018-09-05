@@ -8,17 +8,15 @@ import com.igordanilchik.rxjava2test.flows.catalogue.view.CatalogueView
 import com.igordanilchik.rxjava2test.repo.SchedulersSet
 import timber.log.Timber
 
-
 /**
  * @author Igor Danilchik
  */
 
 @InjectViewState
 class CataloguePresenter(
-        schedulersSet: SchedulersSet,
-        val model: ICatalogueModel
-): AppBasePresenter<CatalogueView>(schedulersSet), ICataloguePresenter {
-
+    schedulersSet: SchedulersSet,
+    val model: ICatalogueModel
+) : AppBasePresenter<CatalogueView>(schedulersSet), ICataloguePresenter {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -29,15 +27,15 @@ class CataloguePresenter(
 
     private fun loadData() {
         executeOn(
-                ExecuteOn.IO_DESTROY,
-                model.loadCategories(),
-                { categories ->
-                    Timber.d("update categories UI")
-                    viewState.hideEmptyState()
-                    viewState.showCategories(categories)
-                },
-                viewState::showError,
-                {}
+            ExecuteOn.IO_DESTROY,
+            model.loadCategories(),
+            { categories ->
+                Timber.d("update categories UI")
+                viewState.hideEmptyState()
+                viewState.showCategories(categories)
+            },
+            viewState::showError,
+            {}
         ) {
             it.doOnSubscribe {
                 viewState.showProgress()
@@ -47,6 +45,6 @@ class CataloguePresenter(
 
     override fun onRefresh() = loadData()
 
-    override fun onCategoryClicked(category: Categories.Category) = viewState.goToCategory(category.id)
-
+    override fun onCategoryClicked(category: Categories.Category) =
+        viewState.goToCategory(category.id)
 }

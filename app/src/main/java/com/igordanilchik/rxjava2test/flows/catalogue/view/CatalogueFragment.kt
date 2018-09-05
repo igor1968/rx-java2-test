@@ -1,23 +1,18 @@
 package com.igordanilchik.rxjava2test.flows.catalogue.view
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.google.android.material.snackbar.Snackbar
 import com.igordanilchik.rxjava2test.R
 import com.igordanilchik.rxjava2test.common.mvp.view.BaseFragment
 import com.igordanilchik.rxjava2test.data.Categories
 import com.igordanilchik.rxjava2test.flows.catalogue.builder.CatalogueModule
 import com.igordanilchik.rxjava2test.flows.catalogue.presenter.CataloguePresenter
-import com.igordanilchik.rxjava2test.ui.ViewContract
-import com.igordanilchik.rxjava2test.ui.activity.MainActivity
 import com.igordanilchik.rxjava2test.ui.adapter.CategoriesAdapter
 
 /**
@@ -26,9 +21,9 @@ import com.igordanilchik.rxjava2test.ui.adapter.CategoriesAdapter
 class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.CategoriesCallback {
 
     @BindView(R.id.catalogue_recycler_view)
-    lateinit var recyclerView: RecyclerView
+    lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
     @BindView(R.id.swipe_container)
-    lateinit var swipeContainer: SwipeRefreshLayout
+    lateinit var swipeContainer: androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     @BindView(R.id.empty_state_container)
     lateinit var emptyStateContainer: LinearLayout
 
@@ -38,7 +33,7 @@ class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.Catego
 
     override val layoutResID = R.layout.fragment_catalogue
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         swipeContainer.setOnRefreshListener(presenter::onRefresh)
@@ -48,8 +43,13 @@ class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.Catego
                 android.R.color.holo_red_light)
 
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        recyclerView.addItemDecoration(
+            androidx.recyclerview.widget.DividerItemDecoration(
+                activity,
+                androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
+            )
+        )
     }
 
     override fun onDestroyView() {
@@ -92,15 +92,12 @@ class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.Catego
     }
 
     override fun goToCategory(id: Int) {
-        val bundle = Bundle()
-        bundle.putInt(MainActivity.ARG_CATEGORY_ID, id)
-
-        (activity as ViewContract).goToCategory(bundle)
+        val directions = CatalogueFragmentDirections.toOffersFragment().setCategoryId(id)
+        view?.findNavController()?.navigate(directions)
     }
 
     @ProvidePresenter
-    fun providePresenter(): CataloguePresenter {
-        return appComponent().plusCatalogueComponent(CatalogueModule()).presenter()
-    }
+    fun providePresenter(): CataloguePresenter =
+        appComponent().plusCatalogueComponent(CatalogueModule()).presenter()
 
 }

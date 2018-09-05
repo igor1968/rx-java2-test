@@ -1,9 +1,9 @@
 package com.igordanilchik.rxjava2test.ui.adapter.holder
 
-import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import butterknife.BindView
 import com.arellomobile.mvp.MvpDelegate
 import com.bumptech.glide.Glide
