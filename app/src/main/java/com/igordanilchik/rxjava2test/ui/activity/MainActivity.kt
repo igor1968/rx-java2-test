@@ -9,7 +9,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.android.material.navigation.NavigationView
@@ -61,8 +62,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, drawer);
         toolbar.setupWithNavController(navController, drawer)
 
-        navController.addOnNavigatedListener { _, destination ->
-            mapIsDisplayed = destination.id == R.id.locationFragment
+        navController.addOnDestinationChangedListener { _, navDestination, _ ->
+            mapIsDisplayed = navDestination.id == R.id.locationFragment
         }
     }
 
