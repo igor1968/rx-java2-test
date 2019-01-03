@@ -2,6 +2,7 @@ package com.igordanilchik.rxjava2test.flows.offers.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter

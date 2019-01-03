@@ -24,3 +24,5 @@ data class Offers(
         )
     }
 }
+
+fun Offers.Offer.getParamByKey(key: String): String? = this.param?.find { it.name == key }?.value

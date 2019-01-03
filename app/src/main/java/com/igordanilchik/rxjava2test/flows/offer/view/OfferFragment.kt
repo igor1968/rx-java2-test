@@ -10,10 +10,13 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
 import com.igordanilchik.rxjava2test.R
 import com.igordanilchik.rxjava2test.common.mvp.view.BaseFragment
 import com.igordanilchik.rxjava2test.data.Offers
+import com.igordanilchik.rxjava2test.data.getParamByKey
 import com.igordanilchik.rxjava2test.flows.offer.builder.OfferModule
 import com.igordanilchik.rxjava2test.flows.offer.model.OfferSupplier
 import com.igordanilchik.rxjava2test.flows.offer.presenter.OfferPresenter
@@ -45,26 +48,27 @@ class OfferFragment : BaseFragment(), OfferView {
         title.text = offer.name
         price.text = getString(R.string.offer_price, offer.price)
 
-        getParamByKey(offer, getString(R.string.param_name_weight)).let {
+        offer.getParamByKey(getString(R.string.param_name_weight)).let {
             weight.text = getString(R.string.offer_weight, it)
         }
 
         offer.picture?.let { url ->
             url.takeIf { it.isNotEmpty() }?.let {
+                val options = RequestOptions()
+                    .fitCenter()
+                    .placeholder(context?.let { ctx -> ContextCompat.getDrawable(ctx, R.drawable.ic_image_black_24dp) })
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+
                 Glide.with(this)
-                        .load(it)
-                        .fitCenter()
-                        .placeholder(context?.let { it1 -> ContextCompat.getDrawable(it1, R.drawable.ic_image_black_24dp) })
-                        .crossFade()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(image)
+                    .load(it)
+                    .apply(options)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(image)
             }
         } ?: run { image.visibility = View.GONE }
 
         description.text = offer.description
     }
-
-    private fun getParamByKey(list: Offers.Offer?, key: String): String? = list?.param?.find { it.name == key }?.value
 
     override fun showProgress() {
 

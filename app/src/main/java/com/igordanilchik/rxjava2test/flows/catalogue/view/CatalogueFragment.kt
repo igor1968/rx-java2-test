@@ -3,6 +3,7 @@ package com.igordanilchik.rxjava2test.flows.catalogue.view
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import androidx.navigation.findNavController
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
