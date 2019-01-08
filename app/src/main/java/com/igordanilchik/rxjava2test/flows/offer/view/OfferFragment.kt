@@ -1,10 +1,12 @@
 package com.igordanilchik.rxjava2test.flows.offer.view
 
+import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -26,6 +28,8 @@ import com.igordanilchik.rxjava2test.flows.offer.presenter.OfferPresenter
  */
 class OfferFragment : BaseFragment(), OfferView {
 
+    @BindView(R.id.swipe_container)
+    lateinit var swipeContainer: SwipeRefreshLayout
     @BindView(R.id.card_image)
     lateinit var image: ImageView
     @BindView(R.id.card_title)
@@ -43,6 +47,17 @@ class OfferFragment : BaseFragment(), OfferView {
     lateinit var presenter: OfferPresenter
 
     override val layoutResID = R.layout.fragment_offer
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        swipeContainer.setOnRefreshListener(presenter::onRefresh)
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light)
+   }
+
 
     override fun showOffer(offer: Offers.Offer) {
         title.text = offer.name
@@ -71,11 +86,11 @@ class OfferFragment : BaseFragment(), OfferView {
     }
 
     override fun showProgress() {
-
+        swipeContainer.post { swipeContainer.isRefreshing = true }
     }
 
     override fun hideProgress() {
-
+        swipeContainer.post { swipeContainer.isRefreshing = false }
     }
 
     override fun showError(throwable: Throwable) {

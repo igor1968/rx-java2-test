@@ -7,4 +7,5 @@ import com.igordanilchik.rxjava2test.data.Offers
  */
 interface IOffersPresenter {
     fun onOfferClicked(offer: Offers.Offer)
+    fun onRefresh()
 }

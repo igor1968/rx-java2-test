@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -21,6 +22,8 @@ import com.igordanilchik.rxjava2test.ui.adapter.OffersAdapter
  */
 class OffersFragment : BaseFragment(), OffersView, OffersAdapter.OffersCallback {
 
+    @BindView(R.id.swipe_container)
+    lateinit var swipeContainer: SwipeRefreshLayout
     @BindView(R.id.offers_recycler_view)
     lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
 
@@ -31,6 +34,12 @@ class OffersFragment : BaseFragment(), OffersView, OffersAdapter.OffersCallback 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        swipeContainer.setOnRefreshListener(presenter::onRefresh)
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light)
 
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
@@ -64,9 +73,11 @@ class OffersFragment : BaseFragment(), OffersView, OffersAdapter.OffersCallback 
     }
 
     override fun showProgress() {
+        swipeContainer.post { swipeContainer.isRefreshing = true }
     }
 
     override fun hideProgress() {
+        swipeContainer.post { swipeContainer.isRefreshing = false }
     }
 
     override fun goToOffer(id: Int) {

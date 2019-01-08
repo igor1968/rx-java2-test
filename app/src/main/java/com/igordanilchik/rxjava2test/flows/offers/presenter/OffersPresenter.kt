@@ -23,6 +23,8 @@ class OffersPresenter(
         loadData()
     }
 
+    override fun onRefresh() = loadData()
+
     private fun loadData() {
         executeOn(
                 ExecuteOn.IO_DESTROY,
