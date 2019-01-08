@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -21,9 +23,9 @@ import com.igordanilchik.rxjava2test.ui.adapter.CategoriesAdapter
 class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.CategoriesCallback {
 
     @BindView(R.id.catalogue_recycler_view)
-    lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
+    lateinit var recyclerView: RecyclerView
     @BindView(R.id.swipe_container)
-    lateinit var swipeContainer: androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    lateinit var swipeContainer: SwipeRefreshLayout
     @BindView(R.id.empty_state_container)
     lateinit var emptyStateContainer: LinearLayout
 
