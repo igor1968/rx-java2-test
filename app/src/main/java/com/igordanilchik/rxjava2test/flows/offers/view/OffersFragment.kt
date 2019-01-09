@@ -3,7 +3,9 @@ package com.igordanilchik.rxjava2test.flows.offers.view
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -12,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.igordanilchik.rxjava2test.R
 import com.igordanilchik.rxjava2test.common.mvp.view.BaseFragment
 import com.igordanilchik.rxjava2test.data.Offers
+import com.igordanilchik.rxjava2test.flows.offers.model.Subcategory
 import com.igordanilchik.rxjava2test.flows.offers.builder.OffersModule
 import com.igordanilchik.rxjava2test.flows.offers.model.OffersSupplier
 import com.igordanilchik.rxjava2test.flows.offers.presenter.OffersPresenter
@@ -25,7 +28,7 @@ class OffersFragment : BaseFragment(), OffersView, OffersAdapter.OffersCallback 
     @BindView(R.id.swipe_container)
     lateinit var swipeContainer: SwipeRefreshLayout
     @BindView(R.id.offers_recycler_view)
-    lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
+    lateinit var recyclerView: RecyclerView
 
     @InjectPresenter
     lateinit var presenter: OffersPresenter
@@ -36,17 +39,19 @@ class OffersFragment : BaseFragment(), OffersView, OffersAdapter.OffersCallback 
         super.onViewCreated(view, savedInstanceState)
 
         swipeContainer.setOnRefreshListener(presenter::onRefresh)
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+        swipeContainer.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
             android.R.color.holo_orange_light,
-            android.R.color.holo_red_light)
+            android.R.color.holo_red_light
+        )
 
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.addItemDecoration(
-            androidx.recyclerview.widget.DividerItemDecoration(
+            DividerItemDecoration(
                 activity,
-                androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
+                LinearLayoutManager.VERTICAL
             )
         )
     }
@@ -57,14 +62,16 @@ class OffersFragment : BaseFragment(), OffersView, OffersAdapter.OffersCallback 
         super.onDestroyView()
     }
 
-    override fun onOfferClicked(offer: Offers.Offer) = presenter.onOfferClicked(offer)
+    override fun onOfferClicked(offer: Offers.Meal) = presenter.onOfferClicked(offer)
 
-    override fun showOffers(offers: Offers) {
+    override fun showOffers(subcategory: Subcategory) {
         (recyclerView.adapter as? OffersAdapter)?.apply {
-            appendOrUpdate(offers.offers)
+            appendOrUpdate(subcategory.meals)
         } ?: run {
-            recyclerView.adapter = OffersAdapter(offers, this)
+            recyclerView.adapter = OffersAdapter(subcategory, this)
         }
+
+        subcategory.categoryName?.let { setTitle(it) }
     }
 
     override fun showError(throwable: Throwable) {
@@ -87,7 +94,9 @@ class OffersFragment : BaseFragment(), OffersView, OffersAdapter.OffersCallback 
 
     @ProvidePresenter
     fun providePresenter(): OffersPresenter {
-        val supplier = OffersSupplier(id = arguments?.let { OffersFragmentArgs.fromBundle(it).categoryId } ?: 0)
+        val supplier = OffersSupplier(
+            id = arguments?.let { OffersFragmentArgs.fromBundle(it).categoryId } ?: 0,
+            name = arguments?.let { OffersFragmentArgs.fromBundle(it).categoryName })
 
         return appComponent().plusOffersComponent(OffersModule(supplier)).presenter()
     }

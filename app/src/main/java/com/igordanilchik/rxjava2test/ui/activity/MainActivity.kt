@@ -58,8 +58,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigation() {
         val navController = findNavController(R.id.mainNavigationFragment)
-        navigationView.setupWithNavController(navController);
-        setupActionBarWithNavController(navController, drawer);
+        navigationView.setupWithNavController(navController)
+        setupActionBarWithNavController(navController, drawer)
         toolbar.setupWithNavController(navController, drawer)
 
         navController.addOnDestinationChangedListener { _, navDestination, _ ->

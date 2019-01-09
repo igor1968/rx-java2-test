@@ -4,7 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.igordanilchik.rxjava2test.common.mvp.presenter.AppBasePresenter
 import com.igordanilchik.rxjava2test.flows.location.model.ILocationModel
 import com.igordanilchik.rxjava2test.flows.location.view.LocationView
-import com.igordanilchik.rxjava2test.repo.SchedulersSet
+import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
 import com.vanniktech.rxpermission.Permission
 import io.reactivex.Observable
 

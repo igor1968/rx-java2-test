@@ -5,7 +5,7 @@ import com.igordanilchik.rxjava2test.common.mvp.presenter.AppBasePresenter
 import com.igordanilchik.rxjava2test.data.Categories
 import com.igordanilchik.rxjava2test.flows.catalogue.model.ICatalogueModel
 import com.igordanilchik.rxjava2test.flows.catalogue.view.CatalogueView
-import com.igordanilchik.rxjava2test.repo.SchedulersSet
+import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
 import timber.log.Timber
 
 /**
@@ -46,5 +46,5 @@ class CataloguePresenter(
     override fun onRefresh() = loadData()
 
     override fun onCategoryClicked(category: Categories.Category) =
-        viewState.goToCategory(category.id)
+        viewState.goToCategory(category.id, category.name)
 }

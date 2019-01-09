@@ -4,7 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.igordanilchik.rxjava2test.common.mvp.presenter.AppBasePresenter
 import com.igordanilchik.rxjava2test.flows.offer.model.IOfferModel
 import com.igordanilchik.rxjava2test.flows.offer.view.OfferView
-import com.igordanilchik.rxjava2test.repo.SchedulersSet
+import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
 import timber.log.Timber
 
 /**
@@ -30,7 +30,7 @@ class OfferPresenter(
                 ExecuteOn.IO_DESTROY,
                 model.loadOffer(),
                 {
-                    Timber.d("update offers UI")
+                    Timber.d("update meals UI")
                     viewState.showOffer(it)
                 },
                 viewState::showError,

@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 
 import com.arellomobile.mvp.MvpPresenter;
 import com.igordanilchik.rxjava2test.common.mvp.view.AppBaseView;
-import com.igordanilchik.rxjava2test.repo.SchedulersSet;
+import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

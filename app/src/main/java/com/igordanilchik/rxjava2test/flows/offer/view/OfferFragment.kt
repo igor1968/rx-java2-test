@@ -59,7 +59,9 @@ class OfferFragment : BaseFragment(), OfferView {
    }
 
 
-    override fun showOffer(offer: Offers.Offer) {
+    override fun showOffer(offer: Offers.Meal) {
+        setTitle(offer.name)
+
         title.text = offer.name
         price.text = getString(R.string.offer_price, offer.price)
 
@@ -67,7 +69,7 @@ class OfferFragment : BaseFragment(), OfferView {
             weight.text = getString(R.string.offer_weight, it)
         }
 
-        offer.picture?.let { url ->
+        offer.pictureUrl?.let { url ->
             url.takeIf { it.isNotEmpty() }?.let {
                 val options = RequestOptions()
                     .fitCenter()

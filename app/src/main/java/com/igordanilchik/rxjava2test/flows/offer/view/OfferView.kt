@@ -13,7 +13,7 @@ import com.igordanilchik.rxjava2test.flows.offer.router.OfferRouter
 @StateStrategyType(OneExecutionStateStrategy::class)
 interface OfferView: AppBaseView, OfferRouter {
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showOffer(offer: Offers.Offer)
+    fun showOffer(offer: Offers.Meal)
     fun showProgress()
     fun hideProgress()
     fun showError(throwable: Throwable)

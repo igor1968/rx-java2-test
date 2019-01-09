@@ -2,27 +2,24 @@ package com.igordanilchik.rxjava2test.data
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-
 data class Offers(
-        @JsonProperty("offers") val offers: List<Offer>
+    @JsonProperty("meals") val meals: List<Meal>
 ) {
-
-    data class Offer(
+    data class Meal(
             @JsonProperty("id") val id: Int,
             @JsonProperty("url") val url: String,
             @JsonProperty("name") val name: String,
             @JsonProperty("price") val price: String,
             @JsonProperty("description") val description: String?,
-            @JsonProperty("picture") val picture: String?,
+            @JsonProperty("pictureUrl") val pictureUrl: String?,
             @JsonProperty("categoryId") val categoryId: Int,
-            @JsonProperty("param") val param: List<Param>?
+            @JsonProperty("parameters") val parameters: List<Param>?
     ) {
-
         data class Param(
-                @JsonProperty("name") val name: String,
-                @JsonProperty("value") val value: String
+            @JsonProperty("name") val name: String,
+            @JsonProperty("value") val value: String
         )
     }
 }
 
-fun Offers.Offer.getParamByKey(key: String): String? = this.param?.find { it.name == key }?.value
+fun Offers.Meal.getParamByKey(key: String): String? = this.parameters?.find { it.name == key }?.value

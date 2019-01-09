@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit
 class CatalogueModel(val repository: IRepository) : ICatalogueModel {
 
     override fun loadCategories(): Observable<Categories> =
-            repository.categories.debounce(400, TimeUnit.MILLISECONDS)
+            repository.categories
+                .debounce(400, TimeUnit.MILLISECONDS)
 
 }

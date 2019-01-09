@@ -7,5 +7,5 @@ import io.reactivex.Observable
  * @author Igor Danilchik
  */
 interface IOfferModel {
-    fun loadOffer(): Observable<Offers.Offer>
+    fun loadOffer(): Observable<Offers.Meal>
 }

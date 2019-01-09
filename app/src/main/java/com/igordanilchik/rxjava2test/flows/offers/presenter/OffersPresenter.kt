@@ -5,7 +5,7 @@ import com.igordanilchik.rxjava2test.common.mvp.presenter.AppBasePresenter
 import com.igordanilchik.rxjava2test.data.Offers
 import com.igordanilchik.rxjava2test.flows.offers.model.IOffersModel
 import com.igordanilchik.rxjava2test.flows.offers.view.OffersView
-import com.igordanilchik.rxjava2test.repo.SchedulersSet
+import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
 import timber.log.Timber
 
 /**
@@ -28,9 +28,9 @@ class OffersPresenter(
     private fun loadData() {
         executeOn(
                 ExecuteOn.IO_DESTROY,
-                model.loadOffers(),
+                model.loadSubcategory(),
                 {
-                    Timber.d("update offers UI")
+                    Timber.d("update meals UI")
                     viewState.showOffers(it)
                 },
                 viewState::showError,
@@ -42,6 +42,6 @@ class OffersPresenter(
         }
     }
 
-    override fun onOfferClicked(offer: Offers.Offer) = viewState.goToOffer(offer.id)
+    override fun onOfferClicked(offer: Offers.Meal) = viewState.goToOffer(offer.id)
 
 }

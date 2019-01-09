@@ -4,11 +4,10 @@ import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementMap
 import org.simpleframework.xml.Root
-import java.util.*
+import java.util.HashMap
 
 @Root(name = "offers", strict = false)
 class Offer {
-
     @field:Attribute(name = "id") var id: Int = 0
     @field:Element(name = "url") lateinit var url: String
     @field:Element(name = "categoryId") var categoryId: Int = 0

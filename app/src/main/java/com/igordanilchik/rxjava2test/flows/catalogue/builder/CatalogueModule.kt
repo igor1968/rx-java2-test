@@ -4,7 +4,7 @@ import com.igordanilchik.rxjava2test.data.source.IRepository
 import com.igordanilchik.rxjava2test.flows.catalogue.model.CatalogueModel
 import com.igordanilchik.rxjava2test.flows.catalogue.model.ICatalogueModel
 import com.igordanilchik.rxjava2test.flows.catalogue.presenter.CataloguePresenter
-import com.igordanilchik.rxjava2test.repo.SchedulersSet
+import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
 import dagger.Module
 import dagger.Provides
 

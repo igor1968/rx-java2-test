@@ -5,7 +5,7 @@ import android.content.Context
 import com.igordanilchik.rxjava2test.flows.location.model.ILocationModel
 import com.igordanilchik.rxjava2test.flows.location.model.LocationModel
 import com.igordanilchik.rxjava2test.flows.location.presenter.LocationPresenter
-import com.igordanilchik.rxjava2test.repo.SchedulersSet
+import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
 import com.vanniktech.rxpermission.RealRxPermission
 import dagger.Module
 import dagger.Provides

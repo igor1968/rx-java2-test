@@ -5,7 +5,7 @@ import com.igordanilchik.rxjava2test.flows.offers.model.IOffersModel
 import com.igordanilchik.rxjava2test.flows.offers.model.OffersModel
 import com.igordanilchik.rxjava2test.flows.offers.model.OffersSupplier
 import com.igordanilchik.rxjava2test.flows.offers.presenter.OffersPresenter
-import com.igordanilchik.rxjava2test.repo.SchedulersSet
+import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
 import dagger.Module
 import dagger.Provides
 

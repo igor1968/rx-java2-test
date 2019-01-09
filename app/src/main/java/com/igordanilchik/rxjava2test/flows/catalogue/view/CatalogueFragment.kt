@@ -35,6 +35,8 @@ class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.Catego
 
     override val layoutResID = R.layout.fragment_catalogue
 
+    override val baseTitle = R.string.farfor_title
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -93,8 +95,9 @@ class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.Catego
         emptyStateContainer.visibility = View.GONE
     }
 
-    override fun goToCategory(id: Int) {
-        val directions = CatalogueFragmentDirections.toOffersFragment().setCategoryId(id)
+    override fun goToCategory(id: Int, name: String) {
+        val directions = CatalogueFragmentDirections.toOffersFragment(name)
+            .setCategoryId(id)
         view?.findNavController()?.navigate(directions)
     }
 

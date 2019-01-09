@@ -27,17 +27,17 @@ class CatalogueMapper : ICatalogueMapper {
     override fun mapToOffers(catalogue: Catalogue): Offers =
         Offers(
             catalogue.shop.offers.map { offer ->
-                val params = offer.param?.map { Offers.Offer.Param(name = it.key, value = it.value) }
+                val params = offer.param?.map { Offers.Meal.Param(name = it.key, value = it.value) }
 
-                return@map Offers.Offer(
+                return@map Offers.Meal(
                     id = offer.id,
                     url = offer.url,
                     name = offer.name,
                     price = offer.price,
                     description = offer.description,
                     categoryId = offer.categoryId,
-                    picture = fixUrl(offer.pictureUrl),
-                    param = params
+                    pictureUrl = fixUrl(offer.pictureUrl),
+                    parameters = params
                 )
             }
         )

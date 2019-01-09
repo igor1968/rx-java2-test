@@ -17,7 +17,7 @@ class LocalDataSource(private val preferences: IAppPreferences): ILocalDataSourc
             categories.categories.forEach { category -> preferences.putJSON(KEY_CATEGORY + category.id, category) }
 
     override fun saveOffers(offers: Offers) =
-            offers.offers.forEach { offer -> preferences.putJSON(KEY_OFFER + offer.id, offer) }
+            offers.meals.forEach { offer -> preferences.putJSON(KEY_OFFER + offer.id, offer) }
 
     override fun getCategories(): Observable<Categories> =
             Observable.fromCallable {
@@ -26,6 +26,6 @@ class LocalDataSource(private val preferences: IAppPreferences): ILocalDataSourc
 
     override fun getOffers(): Observable<Offers> =
             Observable.fromCallable {
-                Offers(preferences.getAllObjects(KEY_OFFER, Offers.Offer::class.java))
+                Offers(preferences.getAllObjects(KEY_OFFER, Offers.Meal::class.java))
             }
 }

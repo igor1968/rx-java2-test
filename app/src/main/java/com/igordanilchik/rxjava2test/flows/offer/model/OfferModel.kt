@@ -15,9 +15,9 @@ class OfferModel(
 
     private val id get() = supplier.id
 
-    override fun loadOffer(): Observable<Offers.Offer> =
+    override fun loadOffer(): Observable<Offers.Meal> =
             repository.offers
                     .debounce(400, TimeUnit.MILLISECONDS)
-                    .map { offers -> offers.offers.first { it.id == id } }
+                    .map { offers -> offers.meals.first { it.id == id } }
 
 }

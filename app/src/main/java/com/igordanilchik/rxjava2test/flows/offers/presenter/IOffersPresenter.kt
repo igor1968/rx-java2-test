@@ -6,6 +6,6 @@ import com.igordanilchik.rxjava2test.data.Offers
  * @author Igor Danilchik
  */
 interface IOffersPresenter {
-    fun onOfferClicked(offer: Offers.Offer)
+    fun onOfferClicked(offer: Offers.Meal)
     fun onRefresh()
 }

@@ -11,23 +11,23 @@ import io.reactivex.Observable
  * @author Igor Danilchik
  */
 class Repository(
-        private val localDataSource: ILocalDataSource,
-        private val remoteDataSource: IRemoteDataSource,
-        private val mapper: ICatalogueMapper
-): IRepository {
+    private val localDataSource: ILocalDataSource,
+    private val remoteDataSource: IRemoteDataSource,
+    private val mapper: ICatalogueMapper
+) : IRepository {
 
     override val categories: Observable<Categories>
         get() = Observable.concat(
-                localDataSource.getCategories(),
-                remoteDataSource.catalogue.map { mapper.mapToCategories(it) }
-                        .doOnNext { localDataSource.saveCategories(it) }
+            localDataSource.getCategories(),
+            remoteDataSource.catalogue.map { mapper.mapToCategories(it) }
+                .doOnNext { localDataSource.saveCategories(it) }
         )
 
     override val offers: Observable<Offers>
         get() = Observable.concat(
-                localDataSource.getOffers(),
-                remoteDataSource.catalogue.map { mapper.mapToOffers(it) }
-                        .doOnNext { localDataSource.saveOffers(it) }
+            localDataSource.getOffers(),
+            remoteDataSource.catalogue.map { mapper.mapToOffers(it) }
+                .doOnNext { localDataSource.saveOffers(it) }
         )
 
 }

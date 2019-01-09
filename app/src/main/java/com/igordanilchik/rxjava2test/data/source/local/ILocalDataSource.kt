@@ -12,4 +12,6 @@ interface ILocalDataSource {
     fun saveOffers(offers: Offers)
     fun getCategories(): Observable<Categories>
     fun getOffers(): Observable<Offers>
+//    fun getSubcategory(id: Int): Observable<Subcategory>
+//    fun saveSubcategory(subcategory: Subcategory)
 }

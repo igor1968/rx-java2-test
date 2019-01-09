@@ -1,4 +1,4 @@
-package com.igordanilchik.rxjava2test.repo
+package com.igordanilchik.rxjava2test.common.mvp
 
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
@@ -17,15 +17,16 @@ data class SchedulersSet(
     companion object {
 
         @JvmStatic
-        fun test(): SchedulersSet = from(Schedulers.trampoline())
+        fun test(): SchedulersSet =
+            from(Schedulers.trampoline())
 
         fun from(scheduler: Scheduler): SchedulersSet =
-                SchedulersSet(
-                        scheduler,
-                        scheduler,
-                        scheduler,
-                        scheduler
-                )
+            SchedulersSet(
+                scheduler,
+                scheduler,
+                scheduler,
+                scheduler
+            )
 
     }
 

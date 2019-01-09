@@ -23,7 +23,7 @@ class OffersViewHolder(
         itemView: View,
         parentDelegate: MvpDelegate<*>?,
         callback: OffersAdapter.OffersCallback?
-) : BaseViewHolder<Offers.Offer, OffersAdapter.OffersCallback>(
+) : BaseViewHolder<Offers.Meal, OffersAdapter.OffersCallback>(
         itemView,
         parentDelegate,
         callback
@@ -40,7 +40,7 @@ class OffersViewHolder(
     lateinit var price: TextView
 
 
-    override fun render(item: Offers.Offer) {
+    override fun render(item: Offers.Meal) {
         itemView.setOnClickListener { callback?.onOfferClicked(item) }
 
         name.text = item.name
@@ -57,7 +57,7 @@ class OffersViewHolder(
             .diskCacheStrategy(DiskCacheStrategy.ALL)
 
         Glide.with(itemView.context)
-            .load(item.picture)
+            .load(item.pictureUrl)
             .apply(options)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(image)

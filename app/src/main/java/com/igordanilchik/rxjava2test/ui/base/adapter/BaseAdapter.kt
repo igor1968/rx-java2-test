@@ -83,8 +83,8 @@ abstract class BaseAdapter<HOLDER : BaseViewHolder<ITEM_TYPE, *>, ITEM_TYPE>(
      * Inserts `item` into passed position `pos`.<br></br>
      * In case position is invalid, item will be inserted in the end of the list.
      *
-     * @param pos  position, to be inserted into
-     * @param item element to insert
+     * @parameters pos  position, to be inserted into
+     * @parameters item element to insert
      */
     fun insertInto(pos: Int, item: ITEM_TYPE) =
             when {
@@ -93,7 +93,7 @@ abstract class BaseAdapter<HOLDER : BaseViewHolder<ITEM_TYPE, *>, ITEM_TYPE>(
             }
 
     /**
-     * It add the @param items to the current items list. starting
+     * It add the @parameters items to the current items list. starting
      * in the position 0.
      * If one element already exist into the list, it is moved to the front.
      */
@@ -101,7 +101,7 @@ abstract class BaseAdapter<HOLDER : BaseViewHolder<ITEM_TYPE, *>, ITEM_TYPE>(
             items.indices.forEach { index -> prependOrUpdate(items[index], index) }
 
     /**
-     * It add the @param item to the current items list
+     * It add the @parameters item to the current items list
      * in the position 0.
      * If the element already exist into the list, it is moved to the front.
      */

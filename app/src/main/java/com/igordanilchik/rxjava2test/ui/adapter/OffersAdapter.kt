@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.igordanilchik.rxjava2test.R
 import com.igordanilchik.rxjava2test.data.Offers
+import com.igordanilchik.rxjava2test.flows.offers.model.Subcategory
 import com.igordanilchik.rxjava2test.ui.adapter.holder.OffersViewHolder
 import com.igordanilchik.rxjava2test.ui.base.adapter.BaseAdapter
 import com.igordanilchik.rxjava2test.ui.base.adapter.holder.BaseViewHolder
@@ -12,16 +13,16 @@ import com.igordanilchik.rxjava2test.ui.base.adapter.holder.BaseViewHolder
  * @author Igor Danilchik
  */
 class OffersAdapter(
-        offers: Offers,
+        subcategory: Subcategory,
         private val callback: OffersCallback?
-): BaseAdapter<BaseViewHolder<Offers.Offer, OffersAdapter.OffersCallback>, Offers.Offer>(
-        offers.offers,
+): BaseAdapter<BaseViewHolder<Offers.Meal, OffersAdapter.OffersCallback>, Offers.Meal>(
+        subcategory.meals,
         null
 ) {
 
     override val adapterID: String = OffersAdapter::class.java.simpleName
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Offers.Offer, OffersCallback> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Offers.Meal, OffersCallback> {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.offers_item, parent, false)
 
         return OffersViewHolder(v, null, callback)
@@ -30,6 +31,6 @@ class OffersAdapter(
 
 
     interface OffersCallback {
-        fun onOfferClicked(offer: Offers.Offer)
+        fun onOfferClicked(offer: Offers.Meal)
     }
 }
