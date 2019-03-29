@@ -2,11 +2,7 @@ package com.igordanilchik.rxjava2test.flows.catalogue.view
 
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.google.android.material.snackbar.Snackbar
@@ -16,19 +12,13 @@ import com.igordanilchik.rxjava2test.data.Categories
 import com.igordanilchik.rxjava2test.flows.catalogue.builder.CatalogueModule
 import com.igordanilchik.rxjava2test.flows.catalogue.presenter.CataloguePresenter
 import com.igordanilchik.rxjava2test.ui.adapter.CategoriesAdapter
+import kotlinx.android.synthetic.main.empty_state.*
+import kotlinx.android.synthetic.main.fragment_catalogue.*
 
 /**
  * @author Igor Danilchik
  */
-class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.CategoriesCallback {
-
-    @BindView(R.id.catalogue_recycler_view)
-    lateinit var recyclerView: RecyclerView
-    @BindView(R.id.swipe_container)
-    lateinit var swipeContainer: SwipeRefreshLayout
-    @BindView(R.id.empty_state_container)
-    lateinit var emptyStateContainer: LinearLayout
-
+class CatalogueFragment : BaseFragment(), CatalogueView, CategoriesAdapter.CategoriesCallback {
 
     @InjectPresenter
     lateinit var presenter: CataloguePresenter
@@ -40,15 +30,17 @@ class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.Catego
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        swipeContainer.setOnRefreshListener(presenter::onRefresh)
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light)
+        swipe_container.setOnRefreshListener(presenter::onRefresh)
+        swipe_container.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
 
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
-        recyclerView.addItemDecoration(
+        catalogue_recycler_view.setHasFixedSize(true)
+        catalogue_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        catalogue_recycler_view.addItemDecoration(
             androidx.recyclerview.widget.DividerItemDecoration(
                 activity,
                 androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
@@ -57,42 +49,40 @@ class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.Catego
     }
 
     override fun onDestroyView() {
-        recyclerView.adapter = null
+        catalogue_recycler_view.adapter = null
 
         super.onDestroyView()
     }
 
     override fun onCategoryClicked(category: Categories.Category) =
-            presenter.onCategoryClicked(category)
-
+        presenter.onCategoryClicked(category)
 
     override fun showCategories(categories: Categories) {
-        (recyclerView.adapter as? CategoriesAdapter)?.apply {
+        (catalogue_recycler_view.adapter as? CategoriesAdapter)?.apply {
             appendOrUpdate(categories.categories)
         } ?: run {
-            recyclerView.adapter = CategoriesAdapter(categories, this)
+            catalogue_recycler_view.adapter = CategoriesAdapter(categories, this)
         }
     }
 
-    override fun showError(throwable: Throwable) {
-        Snackbar.make(recyclerView, "Error: " + throwable.message, Snackbar.LENGTH_LONG)
-                .show()
-    }
+    override fun showError(throwable: Throwable) =
+        Snackbar.make(catalogue_recycler_view, "Error: " + throwable.message, Snackbar.LENGTH_LONG)
+            .show()
 
     override fun showProgress() {
-        swipeContainer.post { swipeContainer.isRefreshing = true }
+        swipe_container.post { swipe_container.isRefreshing = true }
     }
 
     override fun hideProgress() {
-        swipeContainer.post { swipeContainer.isRefreshing = false }
+        swipe_container.post { swipe_container.isRefreshing = false }
     }
 
     override fun showEmptyState() {
-        emptyStateContainer.visibility = View.VISIBLE
+        empty_state_container.visibility = View.VISIBLE
     }
 
     override fun hideEmptyState() {
-        emptyStateContainer.visibility = View.GONE
+        empty_state_container.visibility = View.GONE
     }
 
     override fun goToCategory(id: Int, name: String) {
@@ -104,5 +94,4 @@ class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.Catego
     @ProvidePresenter
     fun providePresenter(): CataloguePresenter =
         appComponent().plusCatalogueComponent(CatalogueModule()).presenter()
-
 }

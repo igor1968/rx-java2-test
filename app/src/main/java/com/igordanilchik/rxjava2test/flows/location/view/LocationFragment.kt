@@ -5,14 +5,11 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.widget.TextView
 import androidx.core.app.ActivityCompat
-import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -21,17 +18,13 @@ import com.igordanilchik.rxjava2test.R
 import com.igordanilchik.rxjava2test.common.mvp.view.BaseFragment
 import com.igordanilchik.rxjava2test.flows.location.builder.LocationModule
 import com.igordanilchik.rxjava2test.flows.location.presenter.LocationPresenter
+import kotlinx.android.synthetic.main.fragment_location.*
 import timber.log.Timber
 
 /**
  * @author Igor Danilchik
  */
 class LocationFragment : BaseFragment(), LocationView {
-
-    @BindView(R.id.map_view)
-    lateinit var mapView: MapView
-    @BindView(R.id.address)
-    lateinit var address: TextView
 
     @InjectPresenter
     lateinit var presenter: LocationPresenter
@@ -42,37 +35,46 @@ class LocationFragment : BaseFragment(), LocationView {
 
     override fun onResume() {
         super.onResume()
-        mapView.onResume()
+        map_view.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        mapView.onPause()
+        map_view.onPause()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         MapsInitializer.initialize(activity)
-        mapView.onCreate(savedInstanceState)
+        map_view.onCreate(savedInstanceState)
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        if (activity?.let { ActivityCompat.checkSelfPermission(it, Manifest.permission.ACCESS_FINE_LOCATION) } == PackageManager.PERMISSION_GRANTED
-                || activity?.let { ActivityCompat.checkSelfPermission(it, Manifest.permission.ACCESS_COARSE_LOCATION) } == PackageManager.PERMISSION_GRANTED) {
+        if (activity?.let {
+                ActivityCompat.checkSelfPermission(
+                    it,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            } == PackageManager.PERMISSION_GRANTED
+            || activity?.let {
+                ActivityCompat.checkSelfPermission(
+                    it,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            } == PackageManager.PERMISSION_GRANTED) {
 
             map?.isMyLocationEnabled = false
         }
     }
 
     override fun requestMap() =
-            mapView.getMapAsync {
-                map = it
-                presenter.onMapReady()
-            }
-
+        map_view.getMapAsync {
+            map = it
+            presenter.onMapReady()
+        }
 
     @SuppressLint("MissingPermission")
     override fun updateMap(location: Location, address: String) {
@@ -101,15 +103,15 @@ class LocationFragment : BaseFragment(), LocationView {
     override fun showError(e: Throwable) {
         Timber.e(e, "Error: ")
 
-        Snackbar.make(activity!!.findViewById(android.R.id.content), "Error: " + e.message, Snackbar.LENGTH_LONG)
+        activity?.let {
+            Snackbar.make(it.findViewById(android.R.id.content), "Error: " + e.message, Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
                 .show()
+        }
     }
 
     @ProvidePresenter
     fun providePresenter(): LocationPresenter {
         return appComponent().plusLocationComponent(LocationModule()).presenter()
     }
-
-
 }

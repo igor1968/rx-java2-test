@@ -2,12 +2,7 @@ package com.igordanilchik.rxjava2test.flows.offer.view
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
@@ -22,26 +17,12 @@ import com.igordanilchik.rxjava2test.data.getParamByKey
 import com.igordanilchik.rxjava2test.flows.offer.builder.OfferModule
 import com.igordanilchik.rxjava2test.flows.offer.model.OfferSupplier
 import com.igordanilchik.rxjava2test.flows.offer.presenter.OfferPresenter
+import kotlinx.android.synthetic.main.fragment_offer.*
 
 /**
  * @author Igor Danilchik
  */
 class OfferFragment : BaseFragment(), OfferView {
-
-    @BindView(R.id.swipe_container)
-    lateinit var swipeContainer: SwipeRefreshLayout
-    @BindView(R.id.card_image)
-    lateinit var image: ImageView
-    @BindView(R.id.card_title)
-    lateinit var title: TextView
-    @BindView(R.id.card_price)
-    lateinit var price: TextView
-    @BindView(R.id.card_weight)
-    lateinit var weight: TextView
-    @BindView(R.id.card_description)
-    lateinit var description: TextView
-    @BindView(R.id.linear_layout)
-    lateinit var linearLayout: LinearLayout
 
     @InjectPresenter
     lateinit var presenter: OfferPresenter
@@ -51,22 +32,23 @@ class OfferFragment : BaseFragment(), OfferView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        swipeContainer.setOnRefreshListener(presenter::onRefresh)
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+        swipe_container.setOnRefreshListener(presenter::onRefresh)
+        swipe_container.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
             android.R.color.holo_orange_light,
-            android.R.color.holo_red_light)
-   }
-
+            android.R.color.holo_red_light
+        )
+    }
 
     override fun showOffer(offer: Offers.Meal) {
         setTitle(offer.name)
 
-        title.text = offer.name
-        price.text = getString(R.string.offer_price, offer.price)
+        card_title.text = offer.name
+        card_price.text = getString(R.string.offer_price, offer.price)
 
         offer.getParamByKey(getString(R.string.param_name_weight)).let {
-            weight.text = getString(R.string.offer_weight, it)
+            card_weight.text = getString(R.string.offer_weight, it)
         }
 
         offer.pictureUrl?.let { url ->
@@ -80,25 +62,24 @@ class OfferFragment : BaseFragment(), OfferView {
                     .load(it)
                     .apply(options)
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(image)
+                    .into(card_image)
             }
-        } ?: run { image.visibility = View.GONE }
+        } ?: run { card_image.visibility = View.GONE }
 
-        description.text = offer.description
+        card_description.text = offer.description
     }
 
     override fun showProgress() {
-        swipeContainer.post { swipeContainer.isRefreshing = true }
+        swipe_container.post { swipe_container.isRefreshing = true }
     }
 
     override fun hideProgress() {
-        swipeContainer.post { swipeContainer.isRefreshing = false }
+        swipe_container.post { swipe_container.isRefreshing = false }
     }
 
-    override fun showError(throwable: Throwable) {
-        Snackbar.make(linearLayout, "Error: " + throwable.message, Snackbar.LENGTH_LONG)
-                .show()
-    }
+    override fun showError(throwable: Throwable) =
+        Snackbar.make(linear_layout, "Error: " + throwable.message, Snackbar.LENGTH_LONG)
+            .show()
 
     @ProvidePresenter
     fun providePresenter(): OfferPresenter {
@@ -106,6 +87,4 @@ class OfferFragment : BaseFragment(), OfferView {
 
         return appComponent().plusOfferComponent(OfferModule(supplier)).presenter()
     }
-
-
 }
