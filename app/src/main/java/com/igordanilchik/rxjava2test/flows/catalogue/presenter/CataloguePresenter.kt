@@ -1,12 +1,12 @@
 package com.igordanilchik.rxjava2test.flows.catalogue.presenter
 
 import com.arellomobile.mvp.InjectViewState
+import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
 import com.igordanilchik.rxjava2test.common.mvp.presenter.AppBasePresenter
-import com.igordanilchik.rxjava2test.data.Categories
+import com.igordanilchik.rxjava2test.data.catalogue.dto.entity.CategoryEntity
+import com.igordanilchik.rxjava2test.data.common.logger.CapLogger
 import com.igordanilchik.rxjava2test.flows.catalogue.model.ICatalogueModel
 import com.igordanilchik.rxjava2test.flows.catalogue.view.CatalogueView
-import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
-import timber.log.Timber
 
 /**
  * @author Igor Danilchik
@@ -30,7 +30,7 @@ class CataloguePresenter(
             ExecuteOn.IO_DESTROY,
             model.loadCategories(),
             { categories ->
-                Timber.d("update categories UI")
+                CapLogger.d("update categories UI")
                 viewState.hideEmptyState()
                 viewState.showCategories(categories)
             },
@@ -45,6 +45,6 @@ class CataloguePresenter(
 
     override fun onRefresh() = loadData()
 
-    override fun onCategoryClicked(category: Categories.Category) =
+    override fun onCategoryClicked(category: CategoryEntity) =
         viewState.goToCategory(category.id, category.name)
 }

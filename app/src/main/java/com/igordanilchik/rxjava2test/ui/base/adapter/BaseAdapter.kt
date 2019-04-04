@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.MvpDelegate
 import com.igordanilchik.rxjava2test.BuildConfig
+import com.igordanilchik.rxjava2test.data.common.logger.CapLogger
 import com.igordanilchik.rxjava2test.ui.base.adapter.holder.BaseViewHolder
-import timber.log.Timber
 import java.util.ArrayList
 
 /**
@@ -15,8 +15,8 @@ import java.util.ArrayList
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 abstract class BaseAdapter<HOLDER : BaseViewHolder<ITEM_TYPE, *>, ITEM_TYPE>(
-        items: Collection<ITEM_TYPE>,
-        private val parentDelegate: MvpDelegate<*>?
+    items: Collection<ITEM_TYPE>,
+    private val parentDelegate: MvpDelegate<*>?
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<HOLDER>() {
 
     protected abstract val adapterID: String
@@ -36,7 +36,6 @@ abstract class BaseAdapter<HOLDER : BaseViewHolder<ITEM_TYPE, *>, ITEM_TYPE>(
 
     private var containerHeight: Int = 0
 
-
     override fun onBindViewHolder(holder: HOLDER, position: Int) {
         getItem(position)?.let { holder.bindView(it) }
     }
@@ -46,7 +45,7 @@ abstract class BaseAdapter<HOLDER : BaseViewHolder<ITEM_TYPE, *>, ITEM_TYPE>(
      * already exists, it updates the content, but not the position.
      */
     fun appendOrUpdate(items: List<ITEM_TYPE>) =
-            items.indices.forEach { index -> appendOrUpdate(items[index]) }
+        items.indices.forEach { index -> appendOrUpdate(items[index]) }
 
     fun appendOrUpdate(item: ITEM_TYPE) {
         val indexOf = items.indexOf(item)
@@ -59,7 +58,7 @@ abstract class BaseAdapter<HOLDER : BaseViewHolder<ITEM_TYPE, *>, ITEM_TYPE>(
                 items += item
                 when {
                     hasObservers() -> notifyItemInserted(items.size - 1)
-                    else -> if (BuildConfig.DEBUG) Timber.d("Not has observers")
+                    else -> if (BuildConfig.DEBUG) CapLogger.d("Not has observers")
 
                 }
             }
@@ -74,7 +73,7 @@ abstract class BaseAdapter<HOLDER : BaseViewHolder<ITEM_TYPE, *>, ITEM_TYPE>(
 
             when {
                 hasObservers() -> notifyItemInserted(items.indexOf(item))
-                else -> if (BuildConfig.DEBUG) Timber.d("Not has observers")
+                else -> if (BuildConfig.DEBUG) CapLogger.d("Not has observers")
             }
         }
     }
@@ -83,25 +82,25 @@ abstract class BaseAdapter<HOLDER : BaseViewHolder<ITEM_TYPE, *>, ITEM_TYPE>(
      * Inserts `item` into passed position `pos`.<br></br>
      * In case position is invalid, item will be inserted in the end of the list.
      *
-     * @parameters pos  position, to be inserted into
-     * @parameters item element to insert
+     * @properties pos  position, to be inserted into
+     * @properties item element to insert
      */
     fun insertInto(pos: Int, item: ITEM_TYPE) =
-            when {
-                pos < 0 || pos >= itemCount -> appendOrUpdate(item)
-                else -> prependOrUpdate(item, pos)
-            }
+        when {
+            pos < 0 || pos >= itemCount -> appendOrUpdate(item)
+            else -> prependOrUpdate(item, pos)
+        }
 
     /**
-     * It add the @parameters items to the current items list. starting
+     * It add the @properties items to the current items list. starting
      * in the position 0.
      * If one element already exist into the list, it is moved to the front.
      */
     fun prependOrUpdate(items: List<ITEM_TYPE>) =
-            items.indices.forEach { index -> prependOrUpdate(items[index], index) }
+        items.indices.forEach { index -> prependOrUpdate(items[index], index) }
 
     /**
-     * It add the @parameters item to the current items list
+     * It add the @properties item to the current items list
      * in the position 0.
      * If the element already exist into the list, it is moved to the front.
      */
@@ -111,10 +110,10 @@ abstract class BaseAdapter<HOLDER : BaseViewHolder<ITEM_TYPE, *>, ITEM_TYPE>(
      * It just replace the item if exist.
      */
     fun update(item: ITEM_TYPE) =
-            items.indexOf(item).let { index ->
-                items[index] = item
-                if (hasObservers()) notifyItemChanged(index)
-            }
+        items.indexOf(item).let { index ->
+            items[index] = item
+            if (hasObservers()) notifyItemChanged(index)
+        }
 
     private fun prependOrUpdate(item: ITEM_TYPE, endPosition: Int) {
         val currentPosition = items.indexOf(item)
@@ -160,15 +159,15 @@ abstract class BaseAdapter<HOLDER : BaseViewHolder<ITEM_TYPE, *>, ITEM_TYPE>(
     }
 
     fun getItem(position: Int): ITEM_TYPE? =
-            when {
-                position <= items.size -> items[position]
-                else -> null
-            }
+        when {
+            position <= items.size -> items[position]
+            else -> null
+        }
 
     fun notifyItemsChanged(vararg positions: Int) =
-            positions.forEach { pos ->
-                notifyItemChanged(pos)
-            }
+        positions.forEach { pos ->
+            notifyItemChanged(pos)
+        }
 
     fun getItems(): List<ITEM_TYPE> = items
 
@@ -191,7 +190,6 @@ abstract class BaseAdapter<HOLDER : BaseViewHolder<ITEM_TYPE, *>, ITEM_TYPE>(
     }
 
     protected fun inflateView(parent: ViewGroup, layoutResID: Int): View =
-            LayoutInflater.from(parent.context)
-                    .inflate(layoutResID, parent, false)
-
+        LayoutInflater.from(parent.context)
+            .inflate(layoutResID, parent, false)
 }

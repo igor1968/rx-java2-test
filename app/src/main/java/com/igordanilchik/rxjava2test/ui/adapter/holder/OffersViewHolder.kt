@@ -8,8 +8,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.igordanilchik.rxjava2test.R
-import com.igordanilchik.rxjava2test.data.Offers
-import com.igordanilchik.rxjava2test.data.getParamByKey
+import com.igordanilchik.rxjava2test.data.catalogue.dto.entity.OfferEntity
+import com.igordanilchik.rxjava2test.data.catalogue.dto.entity.getParamByKey
 import com.igordanilchik.rxjava2test.ui.adapter.OffersAdapter
 import com.igordanilchik.rxjava2test.ui.base.adapter.holder.BaseViewHolder
 import kotlinx.android.synthetic.main.offers_item.*
@@ -21,14 +21,14 @@ class OffersViewHolder(
     categoryView: View,
     parentDelegate: MvpDelegate<*>?,
     callback: OffersAdapter.OffersCallback?
-) : BaseViewHolder<Offers.Meal, OffersAdapter.OffersCallback>(
+) : BaseViewHolder<OfferEntity, OffersAdapter.OffersCallback>(
     categoryView,
     parentDelegate,
     callback
 
 ) {
 
-    override fun render(item: Offers.Meal) {
+    override fun render(item: OfferEntity) {
         containerView.setOnClickListener { callback?.onOfferClicked(item) }
 
         offer_name.text = item.name

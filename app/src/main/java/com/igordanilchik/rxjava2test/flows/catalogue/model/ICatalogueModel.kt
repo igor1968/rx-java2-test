@@ -1,11 +1,11 @@
 package com.igordanilchik.rxjava2test.flows.catalogue.model
 
-import com.igordanilchik.rxjava2test.data.Categories
+import com.igordanilchik.rxjava2test.data.catalogue.dto.entity.CategoryEntity
 import io.reactivex.Observable
 
 /**
  * @author Igor Danilchik
  */
 interface ICatalogueModel {
-    fun loadCategories(): Observable<Categories>
+    fun loadCategories(): Observable<List<CategoryEntity>>
 }

@@ -9,4 +9,10 @@ import dagger.Subcomponent
 @Subcomponent(modules = [LocationModule::class])
 interface LocationComponent {
     fun presenter(): LocationPresenter
+
+    @Subcomponent.Builder
+    interface Builder {
+        fun build(): LocationComponent
+    }
+
 }

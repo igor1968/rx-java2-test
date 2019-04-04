@@ -8,8 +8,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.google.android.material.snackbar.Snackbar
 import com.igordanilchik.rxjava2test.R
 import com.igordanilchik.rxjava2test.common.mvp.view.BaseFragment
-import com.igordanilchik.rxjava2test.data.Categories
-import com.igordanilchik.rxjava2test.flows.catalogue.builder.CatalogueModule
+import com.igordanilchik.rxjava2test.data.catalogue.dto.entity.CategoryEntity
 import com.igordanilchik.rxjava2test.flows.catalogue.presenter.CataloguePresenter
 import com.igordanilchik.rxjava2test.ui.adapter.CategoriesAdapter
 import kotlinx.android.synthetic.main.empty_state.*
@@ -54,12 +53,12 @@ class CatalogueFragment : BaseFragment(), CatalogueView, CategoriesAdapter.Categ
         super.onDestroyView()
     }
 
-    override fun onCategoryClicked(category: Categories.Category) =
+    override fun onCategoryClicked(category: CategoryEntity) =
         presenter.onCategoryClicked(category)
 
-    override fun showCategories(categories: Categories) {
+    override fun showCategories(categories: List<CategoryEntity>) {
         (catalogue_recycler_view.adapter as? CategoriesAdapter)?.apply {
-            appendOrUpdate(categories.categories)
+            appendOrUpdate(categories)
         } ?: run {
             catalogue_recycler_view.adapter = CategoriesAdapter(categories, this)
         }
@@ -93,5 +92,8 @@ class CatalogueFragment : BaseFragment(), CatalogueView, CategoriesAdapter.Categ
 
     @ProvidePresenter
     fun providePresenter(): CataloguePresenter =
-        appComponent().plusCatalogueComponent(CatalogueModule()).presenter()
+        appComponent()
+            .catalogueComponentBuilder()
+            .build()
+            .presenter()
 }

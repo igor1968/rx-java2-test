@@ -11,9 +11,10 @@ import com.igordanilchik.rxjava2test.flows.offers.router.OffersRouter
  * @author Igor Danilchik
  */
 @StateStrategyType(OneExecutionStateStrategy::class)
-interface OffersView: AppBaseView, OffersRouter {
+interface OffersView : AppBaseView, OffersRouter {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showOffers(subcategory: Subcategory)
+
     fun showError(throwable: Throwable)
     fun showProgress()
     fun hideProgress()

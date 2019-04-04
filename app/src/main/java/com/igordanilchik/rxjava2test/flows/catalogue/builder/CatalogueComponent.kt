@@ -9,4 +9,10 @@ import dagger.Subcomponent
 @Subcomponent(modules = [CatalogueModule::class])
 interface CatalogueComponent {
     fun presenter(): CataloguePresenter
+
+    @Subcomponent.Builder
+    interface Builder {
+        fun build(): CatalogueComponent
+    }
+
 }

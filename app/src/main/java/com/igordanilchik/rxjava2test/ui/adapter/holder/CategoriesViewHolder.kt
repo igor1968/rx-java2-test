@@ -8,7 +8,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.igordanilchik.rxjava2test.R
-import com.igordanilchik.rxjava2test.data.Categories
+import com.igordanilchik.rxjava2test.data.catalogue.dto.entity.CategoryEntity
 import com.igordanilchik.rxjava2test.ui.adapter.CategoriesAdapter
 import com.igordanilchik.rxjava2test.ui.base.adapter.holder.BaseViewHolder
 import kotlinx.android.synthetic.main.category_item.*
@@ -20,13 +20,13 @@ class CategoriesViewHolder(
     contentView: View,
     parentDelegate: MvpDelegate<*>?,
     callback: CategoriesAdapter.CategoriesCallback?
-) : BaseViewHolder<Categories.Category, CategoriesAdapter.CategoriesCallback>(
+) : BaseViewHolder<CategoryEntity, CategoriesAdapter.CategoriesCallback>(
     contentView,
     parentDelegate,
     callback
 ) {
 
-    override fun render(item: Categories.Category) {
+    override fun render(item: CategoryEntity) {
         containerView.setOnClickListener { callback?.onCategoryClicked(item) }
 
         category_title.text = item.name

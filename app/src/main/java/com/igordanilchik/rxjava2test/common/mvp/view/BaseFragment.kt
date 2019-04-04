@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.igordanilchik.rxjava2test.app.DaggerApplication
-import com.igordanilchik.rxjava2test.common.di.ApplicationComponent
+import com.igordanilchik.rxjava2test.di.common.app.ApplicationComponent
 
 /**
  * @author Igor Danilchik

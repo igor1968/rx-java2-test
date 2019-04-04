@@ -10,8 +10,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.google.android.material.snackbar.Snackbar
 import com.igordanilchik.rxjava2test.R
 import com.igordanilchik.rxjava2test.common.mvp.view.BaseFragment
-import com.igordanilchik.rxjava2test.data.Offers
-import com.igordanilchik.rxjava2test.flows.offers.builder.OffersModule
+import com.igordanilchik.rxjava2test.data.catalogue.dto.entity.OfferEntity
 import com.igordanilchik.rxjava2test.flows.offers.model.OffersSupplier
 import com.igordanilchik.rxjava2test.flows.offers.model.Subcategory
 import com.igordanilchik.rxjava2test.flows.offers.presenter.OffersPresenter
@@ -55,7 +54,7 @@ class OffersFragment : BaseFragment(), OffersView, OffersAdapter.OffersCallback 
         super.onDestroyView()
     }
 
-    override fun onOfferClicked(offer: Offers.Meal) = presenter.onOfferClicked(offer)
+    override fun onOfferClicked(offer: OfferEntity) = presenter.onOfferClicked(offer)
 
     override fun showOffers(subcategory: Subcategory) {
         (offers_recycler_view.adapter as? OffersAdapter)?.apply {
@@ -90,6 +89,10 @@ class OffersFragment : BaseFragment(), OffersView, OffersAdapter.OffersCallback 
             id = arguments?.let { OffersFragmentArgs.fromBundle(it).categoryId } ?: 0,
             name = arguments?.let { OffersFragmentArgs.fromBundle(it).categoryName })
 
-        return appComponent().plusOffersComponent(OffersModule(supplier)).presenter()
+        return appComponent()
+            .offersComponentBuilder()
+            .offersArguments(supplier)
+            .build()
+            .presenter()
     }
 }

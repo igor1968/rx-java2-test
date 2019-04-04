@@ -13,10 +13,9 @@ object FragmentFactory {
 
     fun location(): LocationFragment = LocationFragment()
 
-    fun categories(): CatalogueFragment =  CatalogueFragment()
+    fun categories(): CatalogueFragment = CatalogueFragment()
 
     fun offers(bundle: Bundle): OffersFragment = OffersFragment().apply { arguments = bundle }
 
     fun offer(bundle: Bundle): OfferFragment = OfferFragment().apply { arguments = bundle }
-
 }

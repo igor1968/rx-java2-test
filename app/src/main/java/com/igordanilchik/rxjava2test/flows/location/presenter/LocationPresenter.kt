@@ -1,10 +1,10 @@
 package com.igordanilchik.rxjava2test.flows.location.presenter
 
 import com.arellomobile.mvp.InjectViewState
+import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
 import com.igordanilchik.rxjava2test.common.mvp.presenter.AppBasePresenter
 import com.igordanilchik.rxjava2test.flows.location.model.ILocationModel
 import com.igordanilchik.rxjava2test.flows.location.view.LocationView
-import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
 import com.vanniktech.rxpermission.Permission
 import io.reactivex.Observable
 
@@ -13,8 +13,8 @@ import io.reactivex.Observable
  */
 @InjectViewState
 class LocationPresenter(
-        schedulersSet: SchedulersSet,
-        private val model: ILocationModel
+    schedulersSet: SchedulersSet,
+    private val model: ILocationModel
 ) : AppBasePresenter<LocationView>(schedulersSet), ILocationPresenter {
 
     override fun attachView(view: LocationView?) {
@@ -24,29 +24,30 @@ class LocationPresenter(
     }
 
     override fun onMapReady() {
-        executeOn(ExecuteOn.IO_DETACH,
-                model.requestPermissions(),
-                { permissions ->
-                    when (permissions.state()) {
-                        Permission.State.GRANTED -> onPermissionsGranted()
-                        else -> {
-                        }
+        executeOn(
+            ExecuteOn.IO_DETACH,
+            model.requestPermissions(),
+            { permissions ->
+                when (permissions.state()) {
+                    Permission.State.GRANTED -> onPermissionsGranted()
+                    else -> {
                     }
-                },
-                viewState::showError
+                }
+            },
+            viewState::showError
         )
     }
 
     override fun onPermissionsGranted() {
-        executeOn(ExecuteOn.IO_DETACH,
-                Observable.concat(model.lastKnownLocation, model.updatableLocation)
-                        .flatMap { location ->
-                            model.getAddress(location)
-                                    .map { address -> location to address }
-                        },
-                { (location, address) -> viewState.updateMap(location, address) },
-                viewState::showError
+        executeOn(
+            ExecuteOn.IO_DETACH,
+            Observable.concat(model.lastKnownLocation, model.updatableLocation)
+                .flatMap { location ->
+                    model.getAddress(location)
+                        .map { address -> location to address }
+                },
+            { (location, address) -> viewState.updateMap(location, address) },
+            viewState::showError
         )
     }
-
 }

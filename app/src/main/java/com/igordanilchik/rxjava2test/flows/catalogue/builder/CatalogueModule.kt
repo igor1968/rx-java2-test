@@ -1,10 +1,10 @@
 package com.igordanilchik.rxjava2test.flows.catalogue.builder
 
-import com.igordanilchik.rxjava2test.data.source.IRepository
+import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
+import com.igordanilchik.rxjava2test.data.catalogue.CatalogueRepository
 import com.igordanilchik.rxjava2test.flows.catalogue.model.CatalogueModel
 import com.igordanilchik.rxjava2test.flows.catalogue.model.ICatalogueModel
 import com.igordanilchik.rxjava2test.flows.catalogue.presenter.CataloguePresenter
-import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
 import dagger.Module
 import dagger.Provides
 
@@ -12,18 +12,21 @@ import dagger.Provides
  * @author Igor Danilchik
  */
 @Module
-class CatalogueModule {
+object CatalogueModule {
 
+    @JvmStatic
     @Provides
     internal fun presenter(
-            schedulersSet: SchedulersSet,
-            model: ICatalogueModel
+        schedulersSet: SchedulersSet,
+        model: ICatalogueModel
     ): CataloguePresenter = CataloguePresenter(
-            schedulersSet,
-            model
+        schedulersSet,
+        model
     )
 
+    @JvmStatic
     @Provides
-    internal fun model(repository: IRepository): ICatalogueModel = CatalogueModel(repository)
-
+    internal fun model(
+        repository: CatalogueRepository
+    ): ICatalogueModel = CatalogueModel(repository)
 }

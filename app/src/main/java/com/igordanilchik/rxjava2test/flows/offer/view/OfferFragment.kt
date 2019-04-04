@@ -12,9 +12,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
 import com.igordanilchik.rxjava2test.R
 import com.igordanilchik.rxjava2test.common.mvp.view.BaseFragment
-import com.igordanilchik.rxjava2test.data.Offers
-import com.igordanilchik.rxjava2test.data.getParamByKey
-import com.igordanilchik.rxjava2test.flows.offer.builder.OfferModule
+import com.igordanilchik.rxjava2test.data.catalogue.dto.entity.OfferEntity
+import com.igordanilchik.rxjava2test.data.catalogue.dto.entity.getParamByKey
 import com.igordanilchik.rxjava2test.flows.offer.model.OfferSupplier
 import com.igordanilchik.rxjava2test.flows.offer.presenter.OfferPresenter
 import kotlinx.android.synthetic.main.fragment_offer.*
@@ -41,7 +40,7 @@ class OfferFragment : BaseFragment(), OfferView {
         )
     }
 
-    override fun showOffer(offer: Offers.Meal) {
+    override fun showOffer(offer: OfferEntity) {
         setTitle(offer.name)
 
         card_title.text = offer.name
@@ -85,6 +84,10 @@ class OfferFragment : BaseFragment(), OfferView {
     fun providePresenter(): OfferPresenter {
         val supplier = OfferSupplier(id = arguments?.let { OfferFragmentArgs.fromBundle(it).offerId } ?: 0)
 
-        return appComponent().plusOfferComponent(OfferModule(supplier)).presenter()
+        return appComponent()
+            .offerComponentBuilder()
+            .offerArguments(supplier)
+            .build()
+            .presenter()
     }
 }

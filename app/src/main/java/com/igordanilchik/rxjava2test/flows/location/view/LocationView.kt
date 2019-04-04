@@ -10,7 +10,7 @@ import com.igordanilchik.rxjava2test.flows.location.router.LocationRouter
  * @author Igor Danilchik
  */
 @StateStrategyType(OneExecutionStateStrategy::class)
-interface LocationView: AppBaseView, LocationRouter {
+interface LocationView : AppBaseView, LocationRouter {
     fun requestMap()
     fun showError(e: Throwable)
     fun updateMap(location: Location, address: String)

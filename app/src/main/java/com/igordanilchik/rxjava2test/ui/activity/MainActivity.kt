@@ -11,7 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.igordanilchik.rxjava2test.R
 import com.igordanilchik.rxjava2test.app.DaggerApplication
-import com.igordanilchik.rxjava2test.common.di.ApplicationComponent
+import com.igordanilchik.rxjava2test.di.common.app.ApplicationComponent
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 

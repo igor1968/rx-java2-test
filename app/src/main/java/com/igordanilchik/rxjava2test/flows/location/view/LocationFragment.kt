@@ -16,10 +16,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import com.igordanilchik.rxjava2test.R
 import com.igordanilchik.rxjava2test.common.mvp.view.BaseFragment
-import com.igordanilchik.rxjava2test.flows.location.builder.LocationModule
+import com.igordanilchik.rxjava2test.data.common.logger.CapLogger
 import com.igordanilchik.rxjava2test.flows.location.presenter.LocationPresenter
 import kotlinx.android.synthetic.main.fragment_location.*
-import timber.log.Timber
 
 /**
  * @author Igor Danilchik
@@ -85,7 +84,7 @@ class LocationFragment : BaseFragment(), LocationView {
     }
 
     private fun updateContent(location: Location, addressString: String) {
-        Timber.d("updateContent")
+        CapLogger.d("updateContent")
         cameraSettings(LatLng(location.latitude, location.longitude))
         address.text = addressString
     }
@@ -101,7 +100,7 @@ class LocationFragment : BaseFragment(), LocationView {
     }
 
     override fun showError(e: Throwable) {
-        Timber.e(e, "Error: ")
+        CapLogger.e(e, "Error: ")
 
         activity?.let {
             Snackbar.make(it.findViewById(android.R.id.content), "Error: " + e.message, Snackbar.LENGTH_LONG)
@@ -112,6 +111,9 @@ class LocationFragment : BaseFragment(), LocationView {
 
     @ProvidePresenter
     fun providePresenter(): LocationPresenter {
-        return appComponent().plusLocationComponent(LocationModule()).presenter()
+        return appComponent()
+            .locationComponentBuilder()
+            .build()
+            .presenter()
     }
 }
