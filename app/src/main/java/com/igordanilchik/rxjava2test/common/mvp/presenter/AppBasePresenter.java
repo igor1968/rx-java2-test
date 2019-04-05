@@ -601,8 +601,10 @@ public class AppBasePresenter<View extends AppBaseView> extends MvpPresenter<Vie
     }
 
     private <T> ObservableTransformer<T, T> applyObservableSchedulers(@ExecuteOn final int executeOn) {
-        return observable -> observable.subscribeOn(getSubscribeScheduler(executeOn))
-                .observeOn(getObserveScheduler(executeOn), isDelayError(executeOn));
+        return (Observable<T> observable) -> {
+            return observable.subscribeOn(getSubscribeScheduler(executeOn))
+                    .observeOn(getObserveScheduler(executeOn), isDelayError(executeOn));
+        };
     }
 
     private <T> SingleTransformer<T, T> applySingleSchedulers(@ExecuteOn final int executeOn) {

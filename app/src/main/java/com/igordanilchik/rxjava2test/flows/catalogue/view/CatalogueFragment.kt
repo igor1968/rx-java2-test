@@ -65,7 +65,7 @@ class CatalogueFragment : BaseFragment(), CatalogueView, CategoriesAdapter.Categ
     }
 
     override fun showError(throwable: Throwable) =
-        Snackbar.make(catalogue_recycler_view, "Error: " + throwable.message, Snackbar.LENGTH_LONG)
+        Snackbar.make(catalogue_recycler_view, "Error: ${throwable.message}", Snackbar.LENGTH_LONG)
             .show()
 
     override fun showProgress() {

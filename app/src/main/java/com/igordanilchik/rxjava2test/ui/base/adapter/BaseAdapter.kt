@@ -3,6 +3,7 @@ package com.igordanilchik.rxjava2test.ui.base.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.MvpDelegate
 import com.igordanilchik.rxjava2test.BuildConfig
 import com.igordanilchik.rxjava2test.data.common.logger.CapLogger
@@ -17,7 +18,7 @@ import java.util.ArrayList
 abstract class BaseAdapter<HOLDER : BaseViewHolder<ITEM_TYPE, *>, ITEM_TYPE>(
     items: Collection<ITEM_TYPE>,
     private val parentDelegate: MvpDelegate<*>?
-) : androidx.recyclerview.widget.RecyclerView.Adapter<HOLDER>() {
+) : RecyclerView.Adapter<HOLDER>() {
 
     protected abstract val adapterID: String
 

@@ -4,6 +4,9 @@ import com.arellomobile.mvp.InjectViewState
 import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
 import com.igordanilchik.rxjava2test.common.mvp.presenter.AppBasePresenter
 import com.igordanilchik.rxjava2test.data.catalogue.dto.entity.CategoryEntity
+import com.igordanilchik.rxjava2test.data.common.Constants.CatalogueLoadingBehaviorType
+import com.igordanilchik.rxjava2test.data.common.Constants.CatalogueLoadingBehaviorType.Companion.FORCE_REFRESH
+import com.igordanilchik.rxjava2test.data.common.Constants.CatalogueLoadingBehaviorType.Companion.THROTTLING
 import com.igordanilchik.rxjava2test.data.common.logger.CapLogger
 import com.igordanilchik.rxjava2test.flows.catalogue.model.ICatalogueModel
 import com.igordanilchik.rxjava2test.flows.catalogue.view.CatalogueView
@@ -22,13 +25,13 @@ class CataloguePresenter(
         super.onFirstViewAttach()
 
         viewState.showEmptyState()
-        loadData()
+        loadData(THROTTLING)
     }
 
-    private fun loadData() {
+    private fun loadData(@CatalogueLoadingBehaviorType behavior: Int) {
         executeOn(
             ExecuteOn.IO_DESTROY,
-            model.loadCategories(),
+            model.loadCategories(behavior),
             { categories ->
                 CapLogger.d("update categories UI")
                 viewState.hideEmptyState()
@@ -43,7 +46,7 @@ class CataloguePresenter(
         }
     }
 
-    override fun onRefresh() = loadData()
+    override fun onRefresh() = loadData(FORCE_REFRESH)
 
     override fun onCategoryClicked(category: CategoryEntity) =
         viewState.goToCategory(category.id, category.name)

@@ -4,6 +4,9 @@ import com.arellomobile.mvp.InjectViewState
 import com.igordanilchik.rxjava2test.common.mvp.SchedulersSet
 import com.igordanilchik.rxjava2test.common.mvp.presenter.AppBasePresenter
 import com.igordanilchik.rxjava2test.data.catalogue.dto.entity.OfferEntity
+import com.igordanilchik.rxjava2test.data.common.Constants.CatalogueLoadingBehaviorType
+import com.igordanilchik.rxjava2test.data.common.Constants.CatalogueLoadingBehaviorType.Companion.FORCE_REFRESH
+import com.igordanilchik.rxjava2test.data.common.Constants.CatalogueLoadingBehaviorType.Companion.THROTTLING
 import com.igordanilchik.rxjava2test.flows.offers.model.IOffersModel
 import com.igordanilchik.rxjava2test.flows.offers.view.OffersView
 import timber.log.Timber
@@ -20,15 +23,15 @@ class OffersPresenter(
     override fun attachView(view: OffersView?) {
         super.attachView(view)
 
-        loadData()
+        loadData(THROTTLING)
     }
 
-    override fun onRefresh() = loadData()
+    override fun onRefresh() = loadData(FORCE_REFRESH)
 
-    private fun loadData() {
+    private fun loadData(@CatalogueLoadingBehaviorType behavior: Int) {
         executeOn(
             ExecuteOn.IO_DESTROY,
-            model.loadSubcategory(),
+            model.loadSubcategory(behavior),
             {
                 Timber.d("update meals UI")
                 viewState.showOffers(it)
