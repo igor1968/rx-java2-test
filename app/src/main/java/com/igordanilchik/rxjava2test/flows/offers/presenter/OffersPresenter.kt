@@ -7,9 +7,9 @@ import com.igordanilchik.rxjava2test.data.catalogue.dto.entity.OfferEntity
 import com.igordanilchik.rxjava2test.data.common.Constants.CatalogueLoadingBehaviorType
 import com.igordanilchik.rxjava2test.data.common.Constants.CatalogueLoadingBehaviorType.Companion.FORCE_REFRESH
 import com.igordanilchik.rxjava2test.data.common.Constants.CatalogueLoadingBehaviorType.Companion.THROTTLING
+import com.igordanilchik.rxjava2test.data.common.logger.CapLogger
 import com.igordanilchik.rxjava2test.flows.offers.model.IOffersModel
 import com.igordanilchik.rxjava2test.flows.offers.view.OffersView
-import timber.log.Timber
 
 /**
  * @author Igor Danilchik
@@ -33,7 +33,7 @@ class OffersPresenter(
             ExecuteOn.IO_DESTROY,
             model.loadSubcategory(behavior),
             {
-                Timber.d("update meals UI")
+                CapLogger.d("update meals UI")
                 viewState.showOffers(it)
             },
             viewState::showError,
